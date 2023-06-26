@@ -1,7 +1,12 @@
+import { ActionFactory } from "./action-factory";
+import type { ActionHandler } from "./types";
+
 /**
- * A simple function to make sure all my build tools are working.
- * @returns "Hello World!"
+ * Return an ActionFactory that can be initialized with context.
  */
-export function helloWorld(): string {
-  return "Hello World!";
+export function createAction<Context, Input, Output>(
+  displayName: string,
+  handler: ActionHandler<Context, Input, Output>
+): ActionFactory<Context, Input, Output> {
+  return new ActionFactory(displayName, handler);
 }
