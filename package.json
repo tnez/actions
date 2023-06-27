@@ -1,6 +1,6 @@
 {
   "name": "@tnezdev/actions",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Patterns to express business logic using dependency injection for side-effects",
   "repository": {
     "type": "git",
