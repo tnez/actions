@@ -15,7 +15,7 @@ describe("@tnezdev/actions", () => {
   describe("createAction", () => {
     it("should return an instance of an ActionFactory", () => {
       const MultiplyAction = createAction("MultiplyAction", handler);
-      MultiplyAction.expect(MultiplyAction).toBeInstanceOf(ActionFactory);
+      expect(MultiplyAction).toBeInstanceOf(ActionFactory);
     });
   });
 });
