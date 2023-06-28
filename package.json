@@ -39,10 +39,6 @@
     "type-check": "tsc --noEmit",
     "version": "changeset version && pnpm i --no-frozen-lockfile && git add ."
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
   "lint-staged": {
     "*": [
       "prettier --ignore-unknown --write"

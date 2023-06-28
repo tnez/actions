@@ -1,6 +1,5 @@
 export interface ActionBaseContext {
   displayName: string;
-  logger: typeof console;
 }
 export interface ActionResultHappy<Output> {
   ok: true;

@@ -9,7 +9,7 @@ export class ActionFactory<Context, Input, Output> {
     displayName: string,
     handler: ActionHandler<Context, Input, Output>
   ) {
-    this.baseContext = { displayName, logger: console };
+    this.baseContext = { displayName };
     this.handler = handler;
   }
 
