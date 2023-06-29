@@ -25,7 +25,7 @@ export class Action<Context, Input, Output> {
 
     try {
       logger.info(`Action Started (input: ${JSON.stringify(input)})`);
-      const data = await this.handler(this.ctx, input);
+      const data = await this.handler({ ...this.ctx, logger }, input);
       logger.info(`Action Completed (data: ${JSON.stringify(data)})`);
       return { ok: true as const, data };
     } catch (possibleError) {

@@ -27,7 +27,7 @@ export type GetTemperatureContext = {
   scale?: "celsius" | "fahrenheit";
 };
 export type GetTemperatureInput = { zipcode: string };
-export type GetTemperatureOutput = string;
+export type GetTemperatureOutput = { temperature: number };
 
 const handler: ActionHandler<
   GetTemperatureContext,
@@ -37,9 +37,10 @@ const handler: ActionHandler<
   const { client, scale } = ctx;
   const { zipcode } = input;
 
+  ctx.logger.info("You can emit logs from inside the action");
   const { temperature } = await client.getTempearture(zipcode, { scale });
 
-  return temperature;
+  return { temperature };
 };
 
 export const GetTemperatureAction = createAction("GetTemperature", handler);
@@ -84,5 +85,12 @@ When run, this will produce the following logs:
 
 ```txt
 [GetTemparature:{correlation-id}] Action Started (input: {"zipcode":"12345"})
+[GetTemperature:{correlation-id}] You can emit logs from inside the action
 [GetTempearture:{correlation-id}] Action Completed (data: {"temperature":"75˚F"})
+```
+
+And the result returned from the action will be:
+
+```
+{ ok: true, data: { temperature: 72 } }
 ```
