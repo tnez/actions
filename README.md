@@ -83,6 +83,6 @@ export async function GET(request: Request, requestContext: unknown) {
 When run, this will produce the following logs:
 
 ```txt
-[GetTemparature] Action Started (input: {"zipcode":"12345"})
-[GetTempearture] Action Completed (data: {"temperature":"75˚F"})
+[GetTemparature:{correlation-id}] Action Started (input: {"zipcode":"12345"})
+[GetTempearture:{correlation-id}] Action Completed (data: {"temperature":"75˚F"})
 ```
