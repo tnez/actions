@@ -1,11 +1,6 @@
+import { randomUUID } from "node:crypto";
+import { Logger } from "./logger";
 import type { ActionBaseContext, ActionHandler, ActionResult } from "./types";
-
-const LOG_LEVEL = Object.freeze({
-  ERROR: "error",
-  INFO: "info",
-});
-
-type LogLevel = (typeof LOG_LEVEL)[keyof typeof LOG_LEVEL];
 
 export class Action<Context, Input, Output> {
   private readonly ctx: Context & ActionBaseContext;
@@ -19,23 +14,23 @@ export class Action<Context, Input, Output> {
     this.handler = handler;
   }
 
-  private log(message: string, level: LogLevel = "info"): void {
-    const handler = this.ctx.logger[level];
-    const prefix = `${this.ctx.displayName}`;
-    const fullMessage = `[${prefix}] ${message}`;
+  async run(
+    input: Input,
+    options: Partial<{ correlationId: string }> = {}
+  ): Promise<ActionResult<Output>> {
+    const logger = new Logger({
+      correlationId: options.correlationId ?? randomUUID(),
+      displayName: this.ctx.displayName,
+    });
 
-    handler(fullMessage);
-  }
-
-  async run(input: Input): Promise<ActionResult<Output>> {
     try {
-      this.log(`Action Started (input: ${JSON.stringify(input)})`);
+      logger.info(`Action Started (input: ${JSON.stringify(input)})`);
       const data = await this.handler(this.ctx, input);
-      this.log(`Action Completed (data: ${JSON.stringify(data)})`);
+      logger.info(`Action Completed (data: ${JSON.stringify(data)})`);
       return { ok: true as const, data };
     } catch (possibleError) {
       const error = wrapError(possibleError);
-      this.log(`Action Failed (error: ${error.message})`, LOG_LEVEL.ERROR);
+      logger.error(`Action Failed (error: ${error.message})`);
       return { ok: false as const, error };
     }
   }

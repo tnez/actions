@@ -35,13 +35,9 @@
     "prettier-check": "prettier --check .",
     "publint": "pnpm prepublishOnly && npx publint",
     "release": "pnpm prepublishOnly && changeset publish",
-    "test": "jest --env @edge-runtime/jest-environment .test.ts && jest --env node .test.ts",
+    "test": "jest --env node .test.ts",
     "type-check": "tsc --noEmit",
     "version": "changeset version && pnpm i --no-frozen-lockfile && git add ."
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
   },
   "lint-staged": {
     "*": [
