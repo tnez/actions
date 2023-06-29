@@ -1,3 +1,5 @@
+import type { Logger } from "./logger";
+
 export interface ActionBaseContext {
   displayName: string;
 }
@@ -13,6 +15,6 @@ export interface ActionResultSad {
 }
 export type ActionResult<Output> = ActionResultHappy<Output> | ActionResultSad;
 export type ActionHandler<Context, Input, Output> = (
-  ctx: Context & ActionBaseContext,
+  ctx: Context & ActionBaseContext & { logger: Logger },
   input: Input
 ) => Promise<Output> | Output;

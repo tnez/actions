@@ -87,7 +87,11 @@ describe("action", () => {
 
     it("should invoke the handler with expected arguments", () => {
       const input = "World";
-      expect(handler).toHaveBeenCalledWith(context, input);
+      expect(handler).toHaveBeenCalledWith(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        { ...context, logger: expect.any(Logger) },
+        input
+      );
     });
 
     it("should emit expected log when completed", () => {
