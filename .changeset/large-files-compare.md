@@ -6,7 +6,7 @@ Add `correlationId` to logs to make sequences of actions easier to track.
 
 Change the log format from:
 
- ```
+```
 [ActionDisplayName] The provided message
 ```
 
