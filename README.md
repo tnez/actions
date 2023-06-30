@@ -2,6 +2,14 @@
 
 Patterns to express business logic in a way that encourages using [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection#:~:text=In%20software%20engineering%2C%20dependency%20injection,leading%20to%20loosely%20coupled%20programs.) in order to interact with side-effects to simplify unit testing.
 
+**Actions** are guaranteed to return a response in a consistent envelope:
+
+For the happy path: `{ ok: true, data: Data }`
+
+And for the sad path: `{ ok: false, error: Error }`
+
+This allows for simplified error handling in the event of the sad path.
+
 ## Installation
 
 - npm: `npm i @tnezdev/actions`
