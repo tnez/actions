@@ -1,5 +1,28 @@
 # @tnezdev/actions
 
+## 0.3.1
+
+### Patch Changes
+
+- b17bfb8: Add license (`Apache 2.0`)
+- f48413d: Re-enable edge-environment for unit tests in CI (closes #6)
+- 9a7833e: fix: add missing type exports (closes #24)
+
+  The documentation gives an example of doing something like this:
+
+  ```ts
+  import { createAction } from "@tnezdev/actions";
+  import type { ActionHandler } from "@tnezdev/actions";
+
+  type Conetxt = {};
+  type Input = {};
+  type Output = {};
+
+  const handler: ActionHandler<Context, Input, Output> = () => {};
+  ```
+
+  However, the `ActionHandler` type was not being exported before this fix.
+
 ## 0.3.0
 
 ### Minor Changes
