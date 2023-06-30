@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { Logger } from "./logger";
+import { createLogger } from "./logger";
 import type { ActionBaseContext, ActionHandler, ActionResult } from "./types";
 
 export class Action<Context, Input, Output> {
@@ -18,7 +18,7 @@ export class Action<Context, Input, Output> {
     input: Input,
     options: Partial<{ correlationId: string }> = {}
   ): Promise<ActionResult<Output>> {
-    const logger = new Logger({
+    const logger = createLogger({
       correlationId: options.correlationId ?? randomUUID(),
       displayName: this.ctx.displayName,
     });
