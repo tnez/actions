@@ -1,8 +1,8 @@
 import { Action } from "./action";
-import { Logger } from "./logger";
+import * as Logger from "./logger";
 import type { ActionBaseContext, ActionHandler } from "./types";
 
-jest.mock("./logger");
+// jest.mock("./logger");
 
 interface Context {
   salutation: "Hello" | "Hey" | "Hola";
@@ -49,6 +49,8 @@ describe("action", () => {
     let context: ReturnType<typeof createMockContext>;
     let handler: ReturnType<typeof createMockHandler>;
     let result: unknown;
+    let createLoggerSpy: jest.SpyInstance;
+    let info: jest.SpyInstance;
 
     beforeEach(async () => {
       context = createMockContext({
@@ -56,30 +58,26 @@ describe("action", () => {
         displayName: "SayHello",
       });
       handler = createMockHandler();
+      createLoggerSpy = jest.spyOn(Logger, "createLogger");
+      info = jest.spyOn(Logger.Logger.prototype, "info");
 
       const action = new Action(handler, context);
 
       result = await action.run("World");
     });
 
-    it("should initialize the logger with correct context", () => {
+    it("should create the logger with correct context", () => {
       const expectedContext = {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         correlationId: expect.any(String),
         displayName: context.displayName,
       };
 
-      expect(Logger).toHaveBeenCalledWith(expectedContext);
+      expect(createLoggerSpy).toHaveBeenCalledWith(expectedContext);
     });
 
     it("should emit expected log when started", () => {
-      const loggerInstance = (Logger as jest.Mock<Logger>).mock.instances[0];
-
-      if (!loggerInstance) {
-        throw new Error("Expected loggerInstance to be defined");
-      }
-
-      expect(loggerInstance.info).toHaveBeenNthCalledWith(
+      expect(info).toHaveBeenNthCalledWith(
         1,
         'Action Started (input: "World")'
       );
@@ -89,19 +87,13 @@ describe("action", () => {
       const input = "World";
       expect(handler).toHaveBeenCalledWith(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        { ...context, logger: expect.any(Logger) },
+        { ...context, logger: expect.any(Logger.Logger) },
         input
       );
     });
 
     it("should emit expected log when completed", () => {
-      const loggerInstance = (Logger as jest.Mock<Logger>).mock.instances[0];
-
-      if (!loggerInstance) {
-        throw new Error("Expected loggerInstance to be defined");
-      }
-
-      expect(loggerInstance.info).toHaveBeenLastCalledWith(
+      expect(info).toHaveBeenLastCalledWith(
         'Action Completed (data: "Hello, World")'
       );
     });
@@ -117,6 +109,7 @@ describe("action", () => {
     let context: ReturnType<typeof createMockContext>;
     let handler: ReturnType<typeof createMockHandler>;
     let result: unknown;
+    let error: jest.SpyInstance;
 
     beforeEach(async () => {
       context = createMockContext({
@@ -126,6 +119,7 @@ describe("action", () => {
       handler = createMockHandler(() => {
         throw expectedError;
       });
+      error = jest.spyOn(Logger.Logger.prototype, "error");
 
       const action = new Action(handler, context);
 
@@ -133,15 +127,7 @@ describe("action", () => {
     });
 
     it("should emit expected log", () => {
-      const loggerInstance = (Logger as jest.Mock<Logger>).mock.instances[0];
-
-      if (!loggerInstance) {
-        throw new Error("Expected loggerInstance to be defined");
-      }
-
-      expect(loggerInstance.error).toHaveBeenLastCalledWith(
-        "Action Failed (error: Oopsies!)"
-      );
+      expect(error).toHaveBeenLastCalledWith("Action Failed (error: Oopsies!)");
     });
 
     it("should return the expected result", () => {

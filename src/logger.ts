@@ -3,6 +3,10 @@ export interface LoggerContext {
   correlationId: string;
 }
 
+export function createLogger(context: LoggerContext): Logger {
+  return new Logger(context);
+}
+
 export class Logger {
   private readonly ctx: LoggerContext;
   private readonly quiet: boolean;
