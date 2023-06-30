@@ -2,13 +2,7 @@
 
 Patterns to express business logic in a way that encourages using [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection#:~:text=In%20software%20engineering%2C%20dependency%20injection,leading%20to%20loosely%20coupled%20programs.) in order to interact with side-effects to simplify unit testing.
 
-**Actions** are guaranteed to return a response in a consistent envelope:
-
-For the happy path: `{ ok: true, data: Data }`
-
-And for the sad path: `{ ok: false, error: Error }`
-
-This allows for simplified error handling in the event of the sad path.
+**Actions** are guaranteed to return a response in a consistent envelope, `{ ok: true, data: Data }` for the happy path and `{ ok: false, error: Error }` if an issue occurs. This allows for simplified error handling in the event of the sad path.
 
 ## Installation
 
@@ -22,8 +16,8 @@ You can express your core business logic as **actions**. You may do this in file
 
 ```ts
 /**
- * This might exist in an internal package if used in a monorepo setup. Something like:
- * <rootDir>/packages/actions/src/weather/get-temperature.ts
+ * This might exist in an internal package if used in a monorepo setup.
+ * Something like: <rootDir>/packages/actions/src/weather/get-temperature.ts
  */
 
 import { createAction, ActionHandler } from "@tnezdev/actions";
@@ -69,18 +63,19 @@ const handler: ActionHandler<
 };
 
 /**
- * And finally export that handler which will be wrapped appropriately using the `createAction` convenience function.
+ * And finally export the handler which will be wrapped appropriately using the
+ * `createAction` convenience method.
  */
 export const GetTemperatureAction = createAction("GetTemperature", handler);
 ```
 
-This can then be used in your application by something that is triggered by a user or the system. This may often be something like an API route or a handler invoked from a CLI. For this example, let's pretend we are using from inside an API route in a NextJS application that lives at `/api.domain.com/weather/[zipcode]`.
+This can then be used in your application by something that is triggered by a user or the system. This may often be something like an API route or a handler invoked from a CLI. For this example, let's pretend we are using from inside an API route in a NextJS application that lives at `https://api.domain.com/weather/[zipcode]`.
 
 ```ts
 import * as z from "zod";
 import { GetTemperatureAction } from "@/actions/weather";
 import { WeatherClient } from "@/clients/weather";
-import type { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const getTempeartureAction = new GetTemperatureAction({
   client: new WeatherClient(),
@@ -93,13 +88,17 @@ const RequestContext = z.object({
   }),
 });
 
-export async function GET(request: Request, requestContext: unknown) {
+export async function GET(request: , requestContext: unknown) {
   const { zipcode } = RequestContext.parse(requestContext);
 
   const { ok, data, error } = await getTempeartureAction.run({
     zipcode: "12345",
   });
 
+  /**
+   * Use the action's `ok` value to condition the status and any other
+   * information you want to include in the response.
+   */
   return ok
     ? NextResponse.json({ data })
     : NextResponse.next({ status: 500 }).json({ error });
