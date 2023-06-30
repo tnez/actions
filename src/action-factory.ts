@@ -1,5 +1,5 @@
 import { Action } from "./action";
-import type { ActionHandler, ActionBaseContext } from "./types";
+import type { ActionHandler, ActionBaseContext } from ".";
 
 export class ActionFactory<Context, Input, Output> {
   private readonly baseContext: ActionBaseContext;
