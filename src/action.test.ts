@@ -2,8 +2,6 @@ import { Action } from "./action";
 import * as Logger from "./logger";
 import type { ActionBaseContext, ActionHandler } from "./types";
 
-// jest.mock("./logger");
-
 interface Context {
   salutation: "Hello" | "Hey" | "Hola";
 }
