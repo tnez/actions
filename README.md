@@ -66,12 +66,9 @@ const handler: ActionHandler<
 export const GetTemperatureAction = createAction("GetTemperature", handler);
 ```
 
-This can then be configured as:
+This can then be used in your application by something that is triggered by a user or the system. This may often be something like an API route or a handler invoked from a CLI. For this example, let's pretend we are using from inside an API route in a NextJS application that lives at `/api.domain.com/weather/[zipcode]`.
 
 ```ts
-// apps/src/app/weather/get-temperature/route.ts
-// (exposing a route at GET https://somedomain.com/weather/get-temperature/[zipcode])
-
 import * as z from "zod";
 import { GetTemperatureAction } from "@/actions/weather";
 import { WeatherClient } from "@/clients/weather";
@@ -96,8 +93,8 @@ export async function GET(request: Request, requestContext: unknown) {
   });
 
   return ok
-    ? NextResponse.json(data)
-    : NextResponse.status(500).json({ error: error.message });
+    ? NextResponse.json({ data })
+    : NextResponse.next({ status: 500 }).json({ error });
 }
 ```
 
