@@ -20,7 +20,8 @@ You can express your core business logic as **actions**. You may do this in file
  * Something like: <rootDir>/packages/actions/src/weather/get-temperature.ts
  */
 
-import { createAction, ActionHandler } from "@tnezdev/actions";
+import { createAction } from "@tnezdev/actions";
+import type { ActionHandler } from "@tnezdev/actions";
 import type { WeatherClient } from "@/clients/weather";
 
 /**

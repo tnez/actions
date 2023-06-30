@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { createLogger } from "./logger";
-import type { ActionBaseContext, ActionHandler, ActionResult } from "./types";
+import type { ActionBaseContext, ActionHandler, ActionResult } from ".";
 
 export class Action<Context, Input, Output> {
   private readonly ctx: Context & ActionBaseContext;

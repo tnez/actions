@@ -1,6 +1,6 @@
 import { Action } from "./action";
 import * as Logger from "./logger";
-import type { ActionBaseContext, ActionHandler } from "./types";
+import type { ActionBaseContext, ActionHandler } from ".";
 
 interface Context {
   salutation: "Hello" | "Hey" | "Hola";

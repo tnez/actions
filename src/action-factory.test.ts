@@ -1,6 +1,6 @@
 import { ActionFactory } from "./action-factory";
 import { Action } from "./action";
-import type { ActionHandler } from "./types";
+import type { ActionHandler } from ".";
 
 interface Context {
   factor: number;

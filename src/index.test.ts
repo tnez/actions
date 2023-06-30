@@ -1,5 +1,5 @@
 import { ActionFactory } from "./action-factory";
-import type { ActionHandler } from "./types";
+import type { ActionHandler } from ".";
 import { createAction } from ".";
 
 interface Context {
