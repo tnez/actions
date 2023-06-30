@@ -119,3 +119,5 @@ And the result returned from the action will be:
 ```
 { ok: true, data: { temperature: 72 } }
 ```
+
+You can see a more complete example of real-world usage here: [/src/examples/README.md](/src/examples/README.md)
