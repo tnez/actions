@@ -1,6 +1,6 @@
 # @tnezdev/actions
 
-Patterns to express business logic using dependency injection for side-effects for easy unit testing.
+Patterns to express business logic in a way that encourages using [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection#:~:text=In%20software%20engineering%2C%20dependency%20injection,leading%20to%20loosely%20coupled%20programs.) in order to interact with side-effects to simplify unit testing.
 
 ## Installation
 
@@ -10,25 +10,42 @@ Patterns to express business logic using dependency injection for side-effects f
 
 ## Usage
 
-You can express your core business logic as _actions_. You may do this in files that look something like this toy example:
+You can express your core business logic as **actions**. You may do this in files that look something like this toy example:
 
 ```ts
-// @/actions/src/weather/get-temperature.ts
+/**
+ * This might exist in an internal package if used in a monorepo setup. Something like:
+ * <rootDir>/packages/actions/src/weather/get-temperature.ts
+ */
 
 import { createAction, ActionHandler } from "@tnezdev/actions";
 import type { WeatherClient } from "@/clients/weather";
 
+/**
+ * Define the context that your action depends upon.
+ */
 export type GetTemperatureContext = {
   client: WeatherClient;
   /**
-   * Which scale to report the temperature.
+   * The scale used to express the temperature.
    * @default "celsius"
    */
   scale?: "celsius" | "fahrenheit";
 };
+
+/**
+ * Define the input that the action should expect when `run`.
+ */
 export type GetTemperatureInput = { zipcode: string };
+
+/**
+ * Define the data payload that the action will output after a successful run.
+ */
 export type GetTemperatureOutput = { temperature: number };
 
+/**
+ * Then you can use these type definitions to create a strongly-typed handler.
+ */
 const handler: ActionHandler<
   GetTemperatureContext,
   GetTemperatureInput,
@@ -43,6 +60,9 @@ const handler: ActionHandler<
   return { temperature };
 };
 
+/**
+ * And finally export that handler which will be wrapped appropriately using the `createAction` convenience function.
+ */
 export const GetTemperatureAction = createAction("GetTemperature", handler);
 ```
 
