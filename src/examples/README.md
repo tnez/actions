@@ -2,7 +2,7 @@ This is an example illustrates how **actions**, **clients**, and **entrypoint ha
 
 This example contains the following file structure:
 
-```tree
+```
 ├── actions
 │   └── get-pokemon.ts
 ├── clients
