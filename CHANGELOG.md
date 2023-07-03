@@ -1,5 +1,25 @@
 # @tnezdev/actions
 
+## 0.3.2
+
+### Patch Changes
+
+- 4d9f680: Create examples illustrating real world usage
+
+  Added `/examples` that contains the following illustrating how **actions**, **clients**, and **entrypoint handlers** all interact.
+
+  ```
+  .
+  ├── README.md
+  ├── actions
+  │   └── get-pokemon.ts
+  ├── clients
+  │   └── pokemon.ts
+  └── entrypoint.ts
+
+  2 directories, 4 files
+  ```
+
 ## 0.3.1
 
 ### Patch Changes
