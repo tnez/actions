@@ -1,5 +1,5 @@
-import { createAction } from "../..";
-import type { ActionHandler } from "../..";
+import { createAction } from "../../src";
+import type { ActionHandler } from "../../src";
 import type { Pokemon, PokemonClient } from "../clients/pokemon";
 
 export interface GetPokemonContext {
