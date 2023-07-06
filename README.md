@@ -111,13 +111,27 @@ When run, this will produce the following logs:
 ```txt
 [GetTemparature:{correlation-id}] Action Started (input: {"zipcode":"12345"})
 [GetTemperature:{correlation-id}] You can emit logs from inside the action
-[GetTempearture:{correlation-id}] Action Completed (data: {"temperature":"75˚F"})
+[GetTempearture:{correlation-id}] Action Completed (data: {"temperature":72})
 ```
 
 And the result returned from the action will be:
 
 ```
-{ ok: true, data: { temperature: 72 } }
+{
+  ok: true,
+  data: {
+    temperature: 72,
+  },
+  metadata: {
+    correlationId: '<correation-id>',
+    displayName: 'GetTemperature',
+    runTime: {
+      start: 1688674365730,
+      end: 1688674380205,
+      duration: 14475,
+    }
+  }
+}
 ```
 
 You can see a more complete example of real-world usage here: [/examples/README.md](/examples/README.md)
