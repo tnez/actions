@@ -71,7 +71,9 @@ describe("action", () => {
         displayName: context.displayName,
       };
 
-      expect(createLoggerSpy).toHaveBeenCalledWith(expectedContext);
+      expect(createLoggerSpy).toHaveBeenCalledWith(
+        expect.objectContaining(expectedContext)
+      );
     });
 
     it("should emit expected log when started", () => {
@@ -97,7 +99,25 @@ describe("action", () => {
     });
 
     it("should return the expected result", () => {
-      expect(result).toStrictEqual({ ok: true, data: "Hello, World" });
+      expect(result).toHaveProperty("ok", true);
+      expect(result).toHaveProperty("data", "Hello, World");
+      expect(result).toHaveProperty(
+        "metadata.displayName",
+        context.displayName
+      );
+      expect(result).toHaveProperty(
+        "metadata.correlationId",
+        expect.any(String)
+      );
+      expect(result).toHaveProperty(
+        "metadata.runTime.start",
+        expect.any(Number)
+      );
+      expect(result).toHaveProperty("metadata.runTime.end", expect.any(Number));
+      expect(result).toHaveProperty(
+        "metadata.runTime.duration",
+        expect.any(Number)
+      );
     });
   });
 
@@ -129,10 +149,25 @@ describe("action", () => {
     });
 
     it("should return the expected result", () => {
-      expect(result).toStrictEqual({
-        ok: false,
-        error: expectedError,
-      });
+      expect(result).toHaveProperty("ok", false);
+      expect(result).toHaveProperty("error", expectedError);
+      expect(result).toHaveProperty(
+        "metadata.displayName",
+        context.displayName
+      );
+      expect(result).toHaveProperty(
+        "metadata.correlationId",
+        expect.any(String)
+      );
+      expect(result).toHaveProperty(
+        "metadata.runTime.start",
+        expect.any(Number)
+      );
+      expect(result).toHaveProperty("metadata.runTime.end", expect.any(Number));
+      expect(result).toHaveProperty(
+        "metadata.runTime.duration",
+        expect.any(Number)
+      );
     });
   });
 });

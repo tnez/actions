@@ -1,6 +1,11 @@
 import { randomUUID } from "node:crypto";
 import { createLogger } from "./logger";
-import type { ActionBaseContext, ActionHandler, ActionResult } from ".";
+import type {
+  ActionBaseContext,
+  ActionHandler,
+  ActionMetadata,
+  ActionResult,
+} from ".";
 
 export class Action<Context, Input, Output> {
   private readonly ctx: Context & ActionBaseContext;
@@ -16,23 +21,67 @@ export class Action<Context, Input, Output> {
 
   async run(
     input: Input,
-    options: Partial<{ correlationId: string }> = {}
+    initialMetadata: Partial<ActionMetadata> = {}
   ): Promise<ActionResult<Output>> {
-    const logger = createLogger({
-      correlationId: options.correlationId ?? randomUUID(),
+    const metadata = new Metadata({
+      ...initialMetadata,
       displayName: this.ctx.displayName,
     });
+    const logger = createLogger(metadata.currentValue());
 
     try {
       logger.info(`Action Started (input: ${JSON.stringify(input)})`);
       const data = await this.handler({ ...this.ctx, logger }, input);
+      metadata.stopRunTime();
       logger.info(`Action Completed (data: ${JSON.stringify(data)})`);
-      return { ok: true as const, data };
+      return { ok: true as const, data, metadata: metadata.currentValue() };
     } catch (possibleError) {
       const error = wrapError(possibleError);
+      metadata.stopRunTime();
       logger.error(`Action Failed (error: ${error.message})`);
-      return { ok: false as const, error };
+      return { ok: false as const, error, metadata: metadata.currentValue() };
     }
+  }
+}
+
+class Metadata {
+  private readonly data: ActionMetadata;
+
+  constructor(
+    initialValue: Partial<ActionMetadata> &
+      Pick<Required<ActionMetadata>, "displayName">
+  ) {
+    const {
+      correlationId = randomUUID(),
+      displayName,
+      runTime = { start: Date.now() },
+    } = initialValue;
+
+    this.data = {
+      correlationId,
+      displayName,
+      runTime,
+    };
+  }
+
+  currentValue(): ActionMetadata {
+    return {
+      ...this.data,
+      runTime: this.getRunTime(),
+    };
+  }
+
+  getRunTime(): ActionMetadata["runTime"] {
+    const runTime = this.data.runTime;
+
+    return {
+      ...runTime,
+      duration: runTime.end ? runTime.end - runTime.start : undefined,
+    };
+  }
+
+  stopRunTime(): void {
+    this.data.runTime.end = Date.now();
   }
 }
 
