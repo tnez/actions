@@ -9,18 +9,18 @@ type Input = string;
 type Output = string;
 
 function createMockHandler(
-  fn?: ActionHandler<Context, Input, Output>
+  fn?: ActionHandler<Context, Input, Output>,
 ): ActionHandler<Context, Input, Output> {
   const defaultHandler: ActionHandler<Context, Input, Output> = (
     ctx,
-    name = "World"
+    name = "World",
   ) => `${ctx.salutation}, ${name}`;
 
   return jest.fn().mockImplementationOnce(fn ?? defaultHandler);
 }
 
 function createMockContext(
-  ctx: Context & Pick<ActionBaseContext, "displayName">
+  ctx: Context & Pick<ActionBaseContext, "displayName">,
 ): Context & ActionBaseContext {
   return ctx;
 }
@@ -72,14 +72,14 @@ describe("action", () => {
       };
 
       expect(createLoggerSpy).toHaveBeenCalledWith(
-        expect.objectContaining(expectedContext)
+        expect.objectContaining(expectedContext),
       );
     });
 
     it("should emit expected log when started", () => {
       expect(info).toHaveBeenNthCalledWith(
         1,
-        'Action Started (input: "World")'
+        'Action Started (input: "World")',
       );
     });
 
@@ -88,13 +88,13 @@ describe("action", () => {
       expect(handler).toHaveBeenCalledWith(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         { ...context, logger: expect.any(Logger.Logger) },
-        input
+        input,
       );
     });
 
     it("should emit expected log when completed", () => {
       expect(info).toHaveBeenLastCalledWith(
-        'Action Completed (data: "Hello, World")'
+        'Action Completed (data: "Hello, World")',
       );
     });
 
@@ -103,20 +103,20 @@ describe("action", () => {
       expect(result).toHaveProperty("data", "Hello, World");
       expect(result).toHaveProperty(
         "metadata.displayName",
-        context.displayName
+        context.displayName,
       );
       expect(result).toHaveProperty(
         "metadata.correlationId",
-        expect.any(String)
+        expect.any(String),
       );
       expect(result).toHaveProperty(
         "metadata.runTime.start",
-        expect.any(Number)
+        expect.any(Number),
       );
       expect(result).toHaveProperty("metadata.runTime.end", expect.any(Number));
       expect(result).toHaveProperty(
         "metadata.runTime.duration",
-        expect.any(Number)
+        expect.any(Number),
       );
     });
   });
@@ -153,20 +153,20 @@ describe("action", () => {
       expect(result).toHaveProperty("error", expectedError);
       expect(result).toHaveProperty(
         "metadata.displayName",
-        context.displayName
+        context.displayName,
       );
       expect(result).toHaveProperty(
         "metadata.correlationId",
-        expect.any(String)
+        expect.any(String),
       );
       expect(result).toHaveProperty(
         "metadata.runTime.start",
-        expect.any(Number)
+        expect.any(Number),
       );
       expect(result).toHaveProperty("metadata.runTime.end", expect.any(Number));
       expect(result).toHaveProperty(
         "metadata.runTime.duration",
-        expect.any(Number)
+        expect.any(Number),
       );
     });
   });

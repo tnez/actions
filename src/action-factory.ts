@@ -7,7 +7,7 @@ export class ActionFactory<Context, Input, Output> {
 
   constructor(
     displayName: string,
-    handler: ActionHandler<Context, Input, Output>
+    handler: ActionHandler<Context, Input, Output>,
   ) {
     this.baseContext = { displayName };
     this.handler = handler;
