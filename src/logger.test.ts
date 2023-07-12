@@ -40,7 +40,7 @@ describe("logger", () => {
 
       it("should invoke `console.info` with expected arguments", () => {
         expect(spy).toHaveBeenCalledWith(
-          `[${displayName}:${correlationId}] ${message}`
+          `[${displayName}:${correlationId}] ${message}`,
         );
       });
     });
@@ -77,7 +77,7 @@ describe("logger", () => {
 
       it("should invoke `console.error` with expected arguments", () => {
         expect(spy).toHaveBeenCalledWith(
-          `[${displayName}:${correlationId}] ${message}`
+          `[${displayName}:${correlationId}] ${message}`,
         );
       });
     });
