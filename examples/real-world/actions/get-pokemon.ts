@@ -1,5 +1,5 @@
-import { createAction } from "../../src";
-import type { ActionHandler } from "../../src";
+import { createAction } from "@tnezdev/actions";
+import type { ActionHandler } from "@tnezdev/actions";
 import type { Pokemon, PokemonClient } from "../clients/pokemon";
 
 export interface GetPokemonContext {

@@ -2,6 +2,7 @@
   "name": "real-world",
   "version": "1.0.0",
   "dependencies": {
-    "@tnezdev/actions": "link:../.."
+    "@tnezdev/actions": "link:../..",
+    "zod": "^3.21.4"
   }
 }
