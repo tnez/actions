@@ -1,0 +1,7 @@
+{
+  "name": "real-world",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tnezdev/actions": "link:../.."
+  }
+}
