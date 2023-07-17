@@ -1,5 +1,5 @@
 import { createAction } from "@tnezdev/actions";
-import type { ActionHandler } from "@tnezdev/actions";
+import type { Action, ActionHandler } from "@tnezdev/actions";
 import type { Data } from "../../effects/data";
 import type { User } from "../../schemas/user";
 import type { RequestEmailVerificationAction } from "./request-email-verification";
@@ -16,9 +16,13 @@ export interface Input {
   user: User;
 }
 
+export interface Output {
+  message: string;
+}
+
 export const DISPLAY_NAME = "ActionName";
 
-const handler: ActionHandler<Context, Input, void> = async (ctx, input) => {
+const handler: ActionHandler<Context, Input, Output> = async (ctx, input) => {
   const {
     actions: { requestEmailVerificationAction },
     effects: { data },
@@ -27,9 +31,15 @@ const handler: ActionHandler<Context, Input, void> = async (ctx, input) => {
 
   await data.insert("Users", user);
   await requestEmailVerificationAction.run({ user });
+
+  return {
+    message: `Successfully signed up new user: ${user.id} (${user.displayName})`,
+  };
 };
 
-export const ActionName = createAction<Context, Input, void>(
+export const UserSignUpAction = createAction<Context, Input, Output>(
   DISPLAY_NAME,
   handler,
 );
+
+export type UserSignUpAction = Action<Context, Input, Output>;
