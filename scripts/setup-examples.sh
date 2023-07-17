@@ -20,6 +20,9 @@ for dir in */; do
 	echo "---"
 	# Run pnpm install
 	pnpm install
-	# Change back to the root directory
-	cd "$ROOT_DIR" || exit
+	# Change back to the $ROOT_DIR/examples directory
+	cd "$ROOT_DIR"/examples || exit
 done
+
+# Change back to the root directory
+cd "$ROOT_DIR" || exit
