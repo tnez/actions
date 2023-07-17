@@ -14,7 +14,7 @@ import type { Action } from "@tnezdev/actions";
  */
 export const SomeAction = (createAction<Context, Input, Output> = (
   ctx,
-  input
+  input,
 ) => {
   /* ... */
 });
