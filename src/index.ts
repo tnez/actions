@@ -1,6 +1,8 @@
 import { ActionFactory } from "./action-factory";
 import type { Logger } from "./logger";
 
+export type { Action } from "./action";
+
 export interface ActionBaseContext {
   displayName: string;
 }
