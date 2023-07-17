@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import { createAction } from "@tnezdev/actions";
 import type { Action, ActionHandler } from "@tnezdev/actions";
-import type { Cache } from "@/effects/cache";
-import type { User } from "@/schemas/user";
+import type { Cache } from "../../effects/cache";
+import type { User } from "../../schemas/user";
 
 export interface Context {
   effects: {

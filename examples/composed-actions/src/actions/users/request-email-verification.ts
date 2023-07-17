@@ -1,8 +1,8 @@
 import { createAction } from "@tnezdev/actions";
 import type { Action, ActionHandler } from "@tnezdev/actions";
-import type { CreateEmailVerificationTokenAction } from "@/actions/users/create-email-verification-token";
-import type { Email } from "@/effects/email";
-import type { User } from "@/schemas/user";
+import type { Email } from "../../effects/email";
+import type { User } from "../../schemas/user";
+import type { CreateEmailVerificationTokenAction } from "./create-email-verification-token";
 
 export interface Context {
   actions: {
@@ -20,9 +20,7 @@ export interface Input {
   user: User;
 }
 
-export type Output = undefined;
-
-export const handler: ActionHandler<Context, Input, Output> = async (
+export const handler: ActionHandler<Context, Input, void> = async (
   ctx,
   input,
 ) => {
@@ -51,4 +49,4 @@ export const RequestEmailVerificationAction = createAction(
   handler,
 );
 
-export type RequestEmailVerificationAction = Action<Context, Input, Output>;
+export type RequestEmailVerificationAction = Action<Context, Input, void>;

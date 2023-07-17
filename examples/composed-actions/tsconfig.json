@@ -2,13 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Default",
   "compilerOptions": {
-    "skipLibCheck": true,
-    "strict": true,
-    "baseUrl": "src/",
-    "paths": {
-      "@/*": ["*"]
-    }
+    "strict": true
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts"]
+  "include": ["src"]
 }
