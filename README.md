@@ -1,4 +1,10 @@
-# @tnezdev/actions
+<h1>
+  @tnezdev/actions
+	<br>
+	<a href="https://badge.fury.io/js/@tnezdev%2Factions">
+	  <img alt="npm version" src="https://badge.fury.io/js/@tnezdev%2Factions.svg"
+	</a>
+</h1>
 
 Patterns to express business logic in a way that encourages using [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection#:~:text=In%20software%20engineering%2C%20dependency%20injection,leading%20to%20loosely%20coupled%20programs.) in order to interact with side-effects to simplify unit testing.
 
