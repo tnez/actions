@@ -1,6 +1,8 @@
 import { ActionFactory } from "./action-factory";
 import type { Logger } from "./logger";
 
+export type { Action } from "./action";
+
 export interface ActionBaseContext {
   displayName: string;
 }
@@ -21,7 +23,7 @@ export type ActionResult<Output> = ActionResultHappy<Output> | ActionResultSad;
 
 export type ActionHandler<Context, Input, Output> = (
   ctx: Context & ActionBaseContext & { logger: Logger },
-  input: Input,
+  input: Input
 ) => Promise<Output> | Output;
 
 export interface ActionMetadata {
@@ -39,7 +41,7 @@ export interface ActionMetadata {
  */
 export function createAction<Context, Input, Output>(
   displayName: string,
-  handler: ActionHandler<Context, Input, Output>,
+  handler: ActionHandler<Context, Input, Output>
 ): ActionFactory<Context, Input, Output> {
   return new ActionFactory(displayName, handler);
 }
