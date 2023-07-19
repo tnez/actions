@@ -4,30 +4,37 @@ import type {
   ActionBaseContext,
   ActionHandler,
   ActionMetadata,
+  ActionOptions,
   ActionResult,
 } from ".";
 
 export class Action<Context, Input, Output> {
   private readonly ctx: Context & ActionBaseContext;
   private readonly handler: ActionHandler<Context, Input, Output>;
+  private readonly options: ActionOptions;
 
   constructor(
     handler: ActionHandler<Context, Input, Output>,
     context: Context & ActionBaseContext,
+    options: ActionOptions = {}
   ) {
     this.ctx = context;
     this.handler = handler;
+    this.options = options;
   }
 
   async run(
     input: Input,
-    initialMetadata: Partial<ActionMetadata> = {},
+    initialMetadata: Partial<ActionMetadata> = {}
   ): Promise<ActionResult<Output>> {
+    const { quiet } = this.options;
     const metadata = new Metadata({
       ...initialMetadata,
       displayName: this.ctx.displayName,
     });
-    const logger = createLogger(metadata.currentValue());
+    const loggerContext = metadata.currentValue();
+    const loggerOptions = removeUndefinedEntries({ quiet });
+    const logger = createLogger(loggerContext, loggerOptions);
 
     try {
       logger.info(`Action Started (input: ${JSON.stringify(input)})`);
@@ -49,7 +56,7 @@ class Metadata {
 
   constructor(
     initialValue: Partial<ActionMetadata> &
-      Pick<Required<ActionMetadata>, "displayName">,
+      Pick<Required<ActionMetadata>, "displayName">
   ) {
     const {
       correlationId = randomUUID(),
@@ -83,6 +90,21 @@ class Metadata {
   stopRunTime(): void {
     this.data.runTime.end = Date.now();
   }
+}
+
+function removeUndefinedEntries<T extends Record<string, unknown>>(
+  obj: T
+): Record<string, unknown> | undefined {
+  const filteredObj: Partial<T> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined) {
+      // @ts-expect-error - I'm not sure there is a way to do this with full
+      // blessing of the typescript gods
+      filteredObj[key] = value;
+    }
+  }
+
+  return filteredObj;
 }
 
 function wrapError(error: unknown): Error {
