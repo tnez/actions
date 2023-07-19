@@ -41,7 +41,7 @@ describe("actionFactory", () => {
         expect(Action).toHaveBeenCalledWith(
           handler,
           { displayName: "MultiplyAction", ...context },
-          options
+          options,
         );
       });
     });

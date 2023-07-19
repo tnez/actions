@@ -16,7 +16,7 @@ export class Action<Context, Input, Output> {
   constructor(
     handler: ActionHandler<Context, Input, Output>,
     context: Context & ActionBaseContext,
-    options: ActionOptions = {}
+    options: ActionOptions = {},
   ) {
     this.ctx = context;
     this.handler = handler;
@@ -25,7 +25,7 @@ export class Action<Context, Input, Output> {
 
   async run(
     input: Input,
-    initialMetadata: Partial<ActionMetadata> = {}
+    initialMetadata: Partial<ActionMetadata> = {},
   ): Promise<ActionResult<Output>> {
     const { quiet } = this.options;
     const metadata = new Metadata({
@@ -56,7 +56,7 @@ class Metadata {
 
   constructor(
     initialValue: Partial<ActionMetadata> &
-      Pick<Required<ActionMetadata>, "displayName">
+      Pick<Required<ActionMetadata>, "displayName">,
   ) {
     const {
       correlationId = randomUUID(),
@@ -93,7 +93,7 @@ class Metadata {
 }
 
 function removeUndefinedEntries<T extends Record<string, unknown>>(
-  obj: T
+  obj: T,
 ): Record<string, unknown> | undefined {
   const filteredObj: Partial<T> = {};
   for (const [key, value] of Object.entries(obj)) {

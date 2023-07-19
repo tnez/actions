@@ -11,7 +11,7 @@ export class ActionFactory<Context, Input, Output> {
 
   constructor(
     displayName: string,
-    handler: ActionHandler<Context, Input, Output>
+    handler: ActionHandler<Context, Input, Output>,
   ) {
     this.baseContext = { displayName };
     this.handler = handler;
@@ -19,12 +19,12 @@ export class ActionFactory<Context, Input, Output> {
 
   initialize(
     context: Context,
-    options: ActionOptions = {}
+    options: ActionOptions = {},
   ): Action<Context, Input, Output> {
     return new Action(
       this.handler,
       { ...context, ...this.baseContext },
-      options
+      options,
     );
   }
 }

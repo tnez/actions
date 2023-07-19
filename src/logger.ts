@@ -9,7 +9,7 @@ export type LoggerOptions = Partial<{
 
 export function createLogger(
   context: LoggerContext,
-  options: LoggerOptions = {}
+  options: LoggerOptions = {},
 ): Logger {
   return new Logger(context, options);
 }

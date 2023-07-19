@@ -40,7 +40,7 @@ describe("logger", () => {
 
       it("should invoke `console.info` with expected arguments", () => {
         expect(spy).toHaveBeenCalledWith(
-          `[${displayName}:${correlationId}] ${message}`
+          `[${displayName}:${correlationId}] ${message}`,
         );
       });
     });
@@ -64,7 +64,7 @@ describe("logger", () => {
         spy = jest.spyOn(console, "info");
         const logger = new Logger(
           { displayName, correlationId },
-          { quiet: true }
+          { quiet: true },
         );
         logger.info(message);
       });
@@ -93,7 +93,7 @@ describe("logger", () => {
 
       it("should invoke `console.error` with expected arguments", () => {
         expect(spy).toHaveBeenCalledWith(
-          `[${displayName}:${correlationId}] ${message}`
+          `[${displayName}:${correlationId}] ${message}`,
         );
       });
 
@@ -101,14 +101,14 @@ describe("logger", () => {
         beforeAll(() => {
           const logger = new Logger(
             { displayName, correlationId },
-            { quiet: true }
+            { quiet: true },
           );
           logger.error(message);
         });
 
         it("should _still_ invoke `console.error`", () => {
           expect(spy).toHaveBeenCalledWith(
-            `[${displayName}:${correlationId}] ${message}`
+            `[${displayName}:${correlationId}] ${message}`,
           );
         });
       });
