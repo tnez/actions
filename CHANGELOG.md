@@ -1,5 +1,90 @@
 # @tnezdev/actions
 
+## 0.4.0
+
+### Minor Changes
+
+- a13b38c: docs: switch to using fully fledged example packages
+
+  Switch examples to use fully formed packages where each one has their own `package.json` and links to the built library.
+
+- 5d6d449: Add `Metadata` to `ActionOutput`
+
+  Previously, the action output would be `{ ok: true, data: Data }` for the happy path and `{ ok: false, error: Error }` for the sad path. We have added a `metadata` property to both paths that is defined thusly:
+
+  ```ts
+  export interface ActionMetadata {
+    correlationId: string;
+    displayName: string;
+    runTime: {
+      start: number;
+      end?: number;
+      duration?: number;
+    };
+  }
+  ```
+
+  Which in real-world usage will look something like this:
+
+  ```
+  {
+    ok: true,
+    data: {
+      temperature: 72,
+    },
+    metadata: {
+      correlationId: '<correation-id>',
+      displayName: 'GetTemperature',
+      runTime: {
+        start: 1688674365730,
+        end: 1688674380205,
+        duration: 14475,
+      }
+    }
+  }
+  ```
+
+- f76b2f2: Export Action type for better DX when composing actions (closes #42)
+
+  We now export the `Action` type which allows you to do the following inside custom actions.
+
+  ```ts
+  import type { Action } from "@tnezdev/actions";
+
+  /**
+   * You would define your action logic here...
+   */
+  export const SomeAction = (createAction<Context, Input, Output> = (
+    ctx,
+    input,
+  ) => {
+    /* ... */
+  });
+
+  /**
+   * And then finally export the type for this same action
+   */
+  export type SomeAction = Action<Context, Input, Output>;
+  ```
+
+  Then you can use these exported action types in the context definition of other actions:
+
+  ```ts
+  import type { SomeAction } from "./some-action";
+
+  export interface Context {
+    actions: {
+      someAction: SomeAction;
+    };
+  }
+  ```
+
+  To better illustrate how this works, we've included a new [composed-actions example](/examples/composed-actions/README.md).
+
+### Patch Changes
+
+- 886450f: docs: move examples out of `/src` into their own top-level directory
+
 ## 0.3.2
 
 ### Patch Changes
