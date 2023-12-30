@@ -7,6 +7,10 @@ export interface ActionBaseContext {
   displayName: string;
 }
 
+export type ActionOptions = Partial<{
+  quiet: boolean;
+}>;
+
 interface ActionResultHappy<Output> {
   ok: true;
   data: Output;

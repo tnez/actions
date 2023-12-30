@@ -3,17 +3,26 @@ export interface LoggerContext {
   correlationId: string;
 }
 
-export function createLogger(context: LoggerContext): Logger {
-  return new Logger(context);
+export type LoggerOptions = Partial<{
+  quiet: boolean;
+}>;
+
+export function createLogger(
+  context: LoggerContext,
+  options: LoggerOptions = {},
+): Logger {
+  return new Logger(context, options);
 }
 
 export class Logger {
   private readonly ctx: LoggerContext;
   private readonly quiet: boolean;
+  private readonly testEnv: boolean;
 
-  constructor(context: LoggerContext) {
+  constructor(context: LoggerContext, options: LoggerOptions = {}) {
     this.ctx = context;
-    this.quiet = process.env.NODE_ENV === "test";
+    this.quiet = options.quiet ?? false;
+    this.testEnv = process.env.NODE_ENV === "test";
   }
 
   /**
@@ -25,7 +34,7 @@ export class Logger {
    * logger.info("My message") // [MyClass:ABCD1234] My message
    */
   error(message: string): void {
-    if (this.quiet) return;
+    if (this.testEnv) return;
     const formattedMessage = this.formatMessage(message);
 
     // eslint-disable-next-line no-console
@@ -41,7 +50,7 @@ export class Logger {
    * logger.info("My message") // [MyClass:ABCD1234] My message
    */
   info(message: string): void {
-    if (this.quiet) return;
+    if (this.quiet || this.testEnv) return;
     const formattedMessage = this.formatMessage(message);
 
     // eslint-disable-next-line no-console
