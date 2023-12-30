@@ -12,8 +12,8 @@ devDependencies:
     specifier: 2.3.7
     version: 2.3.7
   '@edge-runtime/types':
-    specifier: 2.1.4
-    version: 2.1.4
+    specifier: 2.2.7
+    version: 2.2.7
   '@types/jest':
     specifier: 29.5.3
     version: 29.5.3
@@ -621,21 +621,16 @@ packages:
       jest-util: 29.5.0
     dev: true
 
-  /@edge-runtime/primitives@3.0.3:
-    resolution: {integrity: sha512-YnfMWMRQABAH8IsnFMJWMW+SyB4ZeYBPnR7V0aqdnew7Pq60cbH5DyFjS/FhiLwvHQk9wBREmXD7PP0HooEQ1A==}
-    engines: {node: '>=14'}
-    dev: true
-
   /@edge-runtime/primitives@4.0.5:
     resolution: {integrity: sha512-t7QiN5d/KpXgCvIfSt6Nm9Hj3WVdNgc5CpOD73jasY+9EvTI7Ngdj5cXvjcHrPcmYWJZMySPgeEeoL/1N/Llag==}
     engines: {node: '>=16'}
     dev: true
 
-  /@edge-runtime/types@2.1.4:
-    resolution: {integrity: sha512-ImiKAapY49e5r1vQ2EDwABH7luK4ut621RbmhAvwMnhSOEhFsdnj2D+SdBijKD9C9FGUZUNjrR1i9xGuh/FPpg==}
-    engines: {node: '>=14'}
+  /@edge-runtime/types@2.2.7:
+    resolution: {integrity: sha512-9MTwGooICP7+ZsX9BTy6YCRzOr4tP6RFRymsc8CaKORfvuAHgLZUQaLwILfQ94tddufVXcBwq637VfEd3ZXbWA==}
+    engines: {node: '>=16'}
     dependencies:
-      '@edge-runtime/primitives': 3.0.3
+      '@edge-runtime/primitives': 4.0.5
     dev: true
 
   /@edge-runtime/vm@3.1.7:
