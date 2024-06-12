@@ -57,6 +57,22 @@ describe("logger", () => {
         expect(spy).not.toHaveBeenCalled();
       });
     });
+
+    describe("when options.quiet = true", () => {
+      let spy: jest.SpyInstance;
+      beforeEach(() => {
+        spy = jest.spyOn(console, "info");
+        const logger = new Logger(
+          { displayName, correlationId },
+          { quiet: true },
+        );
+        logger.info(message);
+      });
+
+      it("should _not_ invoke `console.info`", () => {
+        expect(spy).not.toHaveBeenCalled();
+      });
+    });
   });
 
   describe("#error", () => {
@@ -79,6 +95,22 @@ describe("logger", () => {
         expect(spy).toHaveBeenCalledWith(
           `[${displayName}:${correlationId}] ${message}`,
         );
+      });
+
+      describe("when options.quiet = true", () => {
+        beforeAll(() => {
+          const logger = new Logger(
+            { displayName, correlationId },
+            { quiet: true },
+          );
+          logger.error(message);
+        });
+
+        it("should _still_ invoke `console.error`", () => {
+          expect(spy).toHaveBeenCalledWith(
+            `[${displayName}:${correlationId}] ${message}`,
+          );
+        });
       });
     });
 

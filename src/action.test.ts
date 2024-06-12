@@ -64,16 +64,41 @@ describe("action", () => {
       result = await action.run("World");
     });
 
-    it("should create the logger with correct context", () => {
-      const expectedContext = {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        correlationId: expect.any(String),
-        displayName: context.displayName,
-      };
+    describe("logger creation", () => {
+      describe("with default context", () => {
+        it("should create the logger with correct context", () => {
+          const expectedContext = {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            correlationId: expect.any(String),
+            displayName: context.displayName,
+          };
+          const expectedOptions = {};
 
-      expect(createLoggerSpy).toHaveBeenCalledWith(
-        expect.objectContaining(expectedContext),
-      );
+          expect(createLoggerSpy).toHaveBeenCalledWith(
+            expect.objectContaining(expectedContext),
+            expectedOptions,
+          );
+        });
+      });
+
+      describe("when { quiet: true }", () => {
+        it("should include quiet in the logger options", async () => {
+          context = {
+            displayName: "SomeAction",
+            salutation: "Hello",
+          };
+          const options = { quiet: true };
+          handler = createMockHandler();
+          const actionInstance = new Action(handler, context, options);
+
+          await actionInstance.run("World");
+
+          expect(createLoggerSpy).toHaveBeenCalledWith(
+            expect.any(Object),
+            expect.objectContaining({ quiet: true }),
+          );
+        });
+      });
     });
 
     it("should emit expected log when started", () => {
