@@ -9,8 +9,8 @@ devDependencies:
     specifier: 2.27.1
     version: 2.27.1
   '@edge-runtime/jest-environment':
-    specifier: 2.3.7
-    version: 2.3.7
+    specifier: 2.3.10
+    version: 2.3.10
   '@edge-runtime/types':
     specifier: 2.2.7
     version: 2.2.7
@@ -609,11 +609,11 @@ packages:
       prettier: 2.8.8
     dev: true
 
-  /@edge-runtime/jest-environment@2.3.7:
-    resolution: {integrity: sha512-gfr8yAlvqt3WkyHOzuxf84Y6naPawGjn4CHlaMnH0MYBVYKvF6J/WORuw85z88fwzK5dmJwiBSQoVdyP2ndIzQ==}
+  /@edge-runtime/jest-environment@2.3.10:
+    resolution: {integrity: sha512-wms2hveQV18DnWkiqzpjzIJ4SoD3+dXzuQ3/GAsklQDCGd4ClkREu5zCy0TFha0mR4I9tqi0DB8nD5Ldd/r1Pg==}
     engines: {node: '>=16'}
     dependencies:
-      '@edge-runtime/vm': 3.1.7
+      '@edge-runtime/vm': 3.2.0
       '@jest/environment': 29.5.0
       '@jest/fake-timers': 29.5.0
       jest-mock: 29.5.0
@@ -625,6 +625,11 @@ packages:
     engines: {node: '>=16'}
     dev: true
 
+  /@edge-runtime/primitives@4.1.0:
+    resolution: {integrity: sha512-Vw0lbJ2lvRUqc7/soqygUX216Xb8T3WBZ987oywz6aJqRxcwSVWwr9e+Nqo2m9bxobA9mdbWNNoRY6S9eko1EQ==}
+    engines: {node: '>=16'}
+    dev: true
+
   /@edge-runtime/types@2.2.7:
     resolution: {integrity: sha512-9MTwGooICP7+ZsX9BTy6YCRzOr4tP6RFRymsc8CaKORfvuAHgLZUQaLwILfQ94tddufVXcBwq637VfEd3ZXbWA==}
     engines: {node: '>=16'}
@@ -632,11 +637,11 @@ packages:
       '@edge-runtime/primitives': 4.0.5
     dev: true
 
-  /@edge-runtime/vm@3.1.7:
-    resolution: {integrity: sha512-hUMFbDQ/nZN+1TLMi6iMO1QFz9RSV8yGG8S42WFPFma1d7VSNE0eMdJUmwjmtav22/iQkzHMmu6oTSfAvRGS8g==}
+  /@edge-runtime/vm@3.2.0:
+    resolution: {integrity: sha512-0dEVyRLM/lG4gp1R/Ik5bfPl/1wX00xFwd5KcNH602tzBa09oF7pbTKETEhR1GjZ75K6OJnYFu8II2dyMhONMw==}
     engines: {node: '>=16'}
     dependencies:
-      '@edge-runtime/primitives': 4.0.5
+      '@edge-runtime/primitives': 4.1.0
     dev: true
 
   /@esbuild/android-arm64@0.18.6:
